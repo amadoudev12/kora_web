@@ -1,0 +1,1343 @@
+/* ==========================================================================
+   COMPOSANTS — en-tête, pied de page, cartes, badges, pagination…
+   Utilisés sur plusieurs pages.
+   ========================================================================== */
+
+/* --- Barre d'informations ----------------------------------------------- */
+
+.topbar {
+  display: none;
+  background: var(--color-ink);
+  color: rgb(247 244 238 / 0.7);
+  font-size: 0.78rem;
+}
+
+@media (min-width: 48em) {
+  .topbar {
+    display: block;
+  }
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 36px;
+}
+
+.topbar p {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.topbar-links {
+  display: flex;
+  gap: var(--space-5);
+  list-style: none;
+}
+
+.topbar a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.topbar a:hover {
+  color: var(--color-paper);
+}
+
+.topbar .icon {
+  color: var(--color-copper-light);
+}
+
+/* --- En-tête ------------------------------------------------------------ */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgb(247 244 238 / 0.92);
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: saturate(1.4) blur(10px);
+}
+
+.header-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "brand toggle"
+    "search search";
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  padding-block: var(--space-3);
+}
+
+/* Logo : symbole + nom en serif */
+.brand {
+  grid-area: brand;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  text-decoration: none;
+}
+
+.brand img {
+  width: 34px;
+  height: 34px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 600;
+  font-variation-settings: "opsz" 72;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
+.brand-tagline {
+  margin-top: 3px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.menu-toggle {
+  grid-area: toggle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 12px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 1.2rem;
+}
+
+.menu-toggle .icon-close,
+.menu-toggle[aria-expanded="true"] .icon-open {
+  display: none;
+}
+
+.menu-toggle[aria-expanded="true"] .icon-close {
+  display: block;
+}
+
+/* Navigation : panneau déroulant sur mobile */
+.main-nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: var(--space-3) 1.25rem var(--space-5);
+  background: var(--color-paper);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+}
+
+.main-nav.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.nav-list {
+  list-style: none;
+}
+
+.nav-list li + li {
+  border-top: 1px solid var(--color-border);
+}
+
+.nav-list a {
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: color var(--transition), padding var(--transition);
+}
+
+.nav-list a:hover,
+.nav-list a[aria-current="page"] {
+  padding-left: var(--space-2);
+  color: var(--color-copper);
+}
+
+.nav-whatsapp {
+  width: 100%;
+  margin-top: var(--space-4);
+}
+
+/* Recherche */
+.header-search {
+  grid-area: search;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: 46px;
+  padding-left: var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 12px;
+  background: var(--color-surface);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.header-search:focus-within {
+  border-color: var(--color-copper);
+  box-shadow: 0 0 0 4px rgb(180 98 42 / 0.12);
+}
+
+.header-search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  font-size: var(--fs-base);
+}
+
+.header-search input:focus {
+  outline: none;
+}
+
+.search-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-right: 3px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--color-text-muted);
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.search-btn:hover {
+  background: var(--color-paper-deep);
+  color: var(--color-ink);
+}
+
+.search-submit {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.search-submit:hover {
+  background: var(--color-ink-soft);
+  color: var(--color-paper);
+}
+
+.voice-search-btn.is-listening {
+  background: var(--color-copper);
+  color: #fff;
+  animation: listening 1.2s ease-in-out infinite;
+}
+
+@keyframes listening {
+  50% {
+    box-shadow: 0 0 0 7px rgb(180 98 42 / 0.18);
+  }
+}
+
+/* Version bureau : une seule ligne */
+@media (min-width: 68.75em) {
+  .header-inner {
+    grid-template-columns: auto 1fr minmax(240px, 300px);
+    grid-template-areas: "brand nav search";
+    gap: var(--space-6);
+    min-height: 78px;
+    padding-block: var(--space-2);
+  }
+
+  .menu-toggle,
+  .nav-whatsapp {
+    display: none;
+  }
+
+  .main-nav {
+    grid-area: nav;
+    position: static;
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav-list {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+
+  .nav-list li + li {
+    border: 0;
+  }
+
+  .nav-list a {
+    position: relative;
+    min-height: 40px;
+    padding-inline: var(--space-3);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+
+  .nav-list a:hover,
+  .nav-list a[aria-current="page"] {
+    padding-left: var(--space-3);
+    color: var(--color-ink);
+  }
+
+  /* Soulignement fin, comme une corde qui se tend */
+  .nav-list a::after {
+    content: "";
+    position: absolute;
+    left: var(--space-3);
+    right: var(--space-3);
+    bottom: 4px;
+    height: 1px;
+    background: var(--color-copper);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition);
+  }
+
+  .nav-list a:hover::after,
+  .nav-list a[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+}
+
+/* --- Bandeau de titre des pages intérieures ----------------------------- */
+
+.page-hero {
+  padding-block: var(--space-6) var(--space-7);
+  border-bottom: 1px solid var(--color-border);
+}
+
+@media (min-width: 48em) {
+  .page-hero {
+    padding-block: var(--space-7) 4rem;
+  }
+}
+
+.page-hero h1 {
+  max-width: 20ch;
+  margin-bottom: var(--space-3);
+  font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.5rem);
+}
+
+.page-hero p {
+  max-width: 58ch;
+  margin: 0;
+  font-size: var(--fs-lg);
+  color: var(--color-text-muted);
+}
+
+/* Fil d'Ariane */
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+  list-style: none;
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+.breadcrumb li + li::before {
+  content: "/";
+  margin-right: var(--space-2);
+  color: var(--color-border-strong);
+}
+
+.breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--color-ink);
+  text-decoration: underline;
+}
+
+.breadcrumb [aria-current="page"] {
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+/* --- Panneaux ----------------------------------------------------------- */
+
+.panel {
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+@media (min-width: 48em) {
+  .panel {
+    padding: 2.5rem;
+  }
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 500;
+}
+
+.panel-title .icon {
+  font-size: 1rem;
+  color: var(--color-copper);
+}
+
+/* --- Grille et cartes produits ------------------------------------------ */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6) var(--space-3);
+  list-style: none;
+}
+
+@media (min-width: 36em) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: var(--space-7) var(--space-5);
+  }
+}
+
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-card-media {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background: var(--color-surface);
+  transition: box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+
+.product-card:hover .product-card-media {
+  border-color: transparent;
+  box-shadow: var(--shadow);
+}
+
+.product-card-media img {
+  width: 100%;
+  height: 100%;
+  padding: 13%;
+  object-fit: contain;
+  transition: transform 0.5s var(--ease);
+}
+
+.product-card:hover .product-card-media img {
+  transform: scale(1.05);
+}
+
+.product-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: var(--space-4) 2px 0;
+}
+
+.product-card-category {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-copper-dark);
+}
+
+.product-card-title {
+  display: -webkit-box;
+  min-height: 2.7em;
+  margin: 0 0 var(--space-2);
+  overflow: hidden;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.35;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+@media (min-width: 36em) {
+  .product-card-title {
+    font-size: 0.98rem;
+  }
+}
+
+/* Le lien du titre couvre toute la carte (le bouton reste cliquable) */
+.product-card-title a {
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.product-card-title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.product-card-title a:focus-visible {
+  outline: none;
+}
+
+.product-card:has(.product-card-title a:focus-visible) .product-card-media {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.product-card-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+  margin: 0;
+  font-size: var(--fs-base);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+}
+
+@media (min-width: 36em) {
+  .product-card-price {
+    font-size: 1.1rem;
+  }
+}
+
+.price-from {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.price-old {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+.product-card .stock {
+  margin-bottom: var(--space-4);
+}
+
+.product-card .btn {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  padding-inline: var(--space-3);
+}
+
+.product-card .btn:hover {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.product-card .btn:hover .icon-whatsapp {
+  color: #5fd38f;
+}
+
+/* --- Badges et disponibilité -------------------------------------------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-copper-soft);
+  color: var(--color-copper-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+a.badge:hover {
+  background: var(--color-copper);
+  color: #fff;
+}
+
+.badge-promo {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  background: var(--color-copper);
+  color: #fff;
+}
+
+.stock {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.stock::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-success);
+  box-shadow: 0 0 0 3px var(--color-whatsapp-soft);
+}
+
+.stock.is-out::before {
+  background: var(--color-danger);
+  box-shadow: 0 0 0 3px #fbe4e1;
+}
+
+/* --- Univers (groupes de catégories) ------------------------------------ */
+
+.universe-grid {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+}
+
+@media (min-width: 56em) {
+  .universe-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+}
+
+.universe-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 104px;
+  gap: var(--space-4);
+  height: 100%;
+  padding: var(--space-5);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+@media (min-width: 48em) {
+  .universe-card {
+    grid-template-columns: 1fr 170px;
+    padding: 2.25rem;
+  }
+}
+
+.universe-card h3 {
+  margin-bottom: var(--space-1);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.25rem + 0.9vw, 2rem);
+  font-weight: 500;
+}
+
+.universe-count {
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+.universe-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.universe-links a {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color var(--transition), background-color var(--transition);
+}
+
+.universe-links a:hover {
+  border-color: var(--color-ink);
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.universe-links span {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* Image posée dans un cercle : la calebasse de la kora */
+.universe-visual {
+  align-self: center;
+  aspect-ratio: 1;
+  padding: 16%;
+  border-radius: 50%;
+  background: var(--color-paper-deep);
+  transition: transform 0.5s var(--ease);
+}
+
+.universe-card:hover .universe-visual {
+  transform: rotate(-4deg) scale(1.04);
+}
+
+.universe-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+/* --- Cartes catégories (page Catégories) -------------------------------- */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  list-style: none;
+}
+
+@media (min-width: 40em) {
+  .category-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-4);
+  }
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  text-decoration: none;
+  transition: box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+
+.category-card:hover {
+  border-color: transparent;
+  box-shadow: var(--shadow);
+}
+
+.category-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 14%;
+  background: var(--color-paper-deep);
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  transition: transform 0.5s var(--ease);
+}
+
+.category-card:hover img {
+  transform: scale(1.05);
+}
+
+.category-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: var(--space-4);
+}
+
+.category-card-name {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-ink);
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+@media (min-width: 40em) {
+  .category-card-name {
+    font-size: var(--fs-base);
+  }
+}
+
+.category-card-count {
+  font-size: var(--fs-xs);
+  color: var(--color-copper-dark);
+  font-weight: 600;
+}
+
+.category-card-desc {
+  display: none;
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 40em) {
+  .category-card-desc {
+    display: block;
+  }
+}
+
+/* --- Engagements (liste en ligne) --------------------------------------- */
+
+.assurances {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  list-style: none;
+  font-size: var(--fs-sm);
+}
+
+@media (min-width: 56em) {
+  .assurances {
+    grid-template-columns: repeat(4, auto);
+    justify-content: space-between;
+  }
+}
+
+.assurances li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  line-height: 1.4;
+}
+
+.assurances .icon {
+  margin-top: 0.15em;
+  font-size: 1.1rem;
+  color: var(--color-copper);
+}
+
+.assurances strong {
+  display: block;
+  color: var(--color-ink);
+}
+
+.assurances span {
+  color: var(--color-text-muted);
+}
+
+/* --- Liste d'informations de contact ------------------------------------ */
+
+.info-list {
+  display: grid;
+  gap: var(--space-5);
+  list-style: none;
+}
+
+.info-list li {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-paper-deep);
+  color: var(--color-ink);
+}
+
+.info-icon.is-whatsapp {
+  background: var(--color-whatsapp-soft);
+  color: var(--color-whatsapp);
+}
+
+.info-list strong {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.info-list a,
+.info-list span {
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}
+
+/* Horaires */
+.hours {
+  display: grid;
+  margin: 0;
+}
+
+.hours div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hours div:last-child {
+  border-bottom: 0;
+}
+
+.hours dt {
+  font-weight: 600;
+}
+
+.hours dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+}
+
+/* --- Pagination --------------------------------------------------------- */
+
+.pagination {
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+.pagination ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-1);
+  list-style: none;
+}
+
+.pagination a,
+.pagination span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding-inline: var(--space-3);
+  border-radius: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.pagination a:hover {
+  background: var(--color-paper-deep);
+  color: var(--color-ink);
+}
+
+.pagination [aria-current="page"] {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.pagination .is-disabled {
+  opacity: 0.3;
+}
+
+/* --- Filtres actifs ----------------------------------------------------- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.35rem 0.45rem 0.35rem 0.85rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.chip .icon {
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.35em;
+  border-radius: 50%;
+  background: var(--color-paper-deep);
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.chip:hover .icon {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* --- Accordéon (balise <details>) --------------------------------------- */
+
+.accordion {
+  border-block: 1px solid var(--color-border);
+}
+
+.accordion summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block: var(--space-4);
+  font-weight: 700;
+  color: var(--color-ink);
+  cursor: pointer;
+  list-style: none;
+}
+
+.accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion summary .icon {
+  transition: transform var(--transition);
+}
+
+.accordion[open] summary .icon {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  padding-bottom: var(--space-4);
+}
+
+/* --- État vide et messages ---------------------------------------------- */
+
+.empty-state {
+  padding: var(--space-7) var(--space-4);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.empty-state .icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: 0 auto var(--space-4);
+  color: var(--color-copper);
+}
+
+.empty-state h1,
+.empty-state h2 {
+  font-size: var(--fs-2xl);
+}
+
+.empty-state-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.form-status {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border-radius: 12px;
+  background: var(--color-whatsapp-soft);
+  color: #0d4a25;
+  font-size: var(--fs-sm);
+}
+
+.form-status[hidden] {
+  display: none;
+}
+
+.form-status .icon {
+  margin-top: 0.2em;
+}
+
+.form-status p {
+  margin: 0;
+}
+
+.form-status a {
+  color: inherit;
+  font-weight: 700;
+}
+
+/* Notification temporaire (recherche vocale…) */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 6rem;
+  z-index: 500;
+  max-width: calc(100% - 2rem);
+  padding: var(--space-3) var(--space-5);
+  border-radius: 12px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-size: var(--fs-sm);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* --- Bouton WhatsApp flottant (ajouté par js/main.js) ------------------- */
+
+.whatsapp-float {
+  position: fixed;
+  right: 1rem;
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-pill);
+  background: var(--color-whatsapp);
+  color: #fff;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgb(24 122 65 / 0.35);
+  animation: float-in 0.6s 0.8s var(--ease) both;
+  transition: transform var(--transition), background-color var(--transition);
+}
+
+.whatsapp-float:hover {
+  background: var(--color-whatsapp-dark);
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+.whatsapp-float .icon {
+  font-size: 1.6rem;
+}
+
+.whatsapp-float-label {
+  display: none;
+}
+
+@media (min-width: 48em) {
+  .whatsapp-float {
+    right: var(--space-6);
+    bottom: var(--space-6);
+    width: auto;
+    padding: 0 1.4rem 0 1.15rem;
+  }
+
+  .whatsapp-float-label {
+    display: inline;
+  }
+}
+
+@keyframes float-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* --- Pied de page ------------------------------------------------------- */
+
+.site-footer {
+  font-size: var(--fs-sm);
+}
+
+.footer-cta {
+  display: grid;
+  gap: var(--space-5);
+  padding-block: 4rem;
+  border-bottom: 1px solid rgb(247 244 238 / 0.1);
+}
+
+@media (min-width: 56em) {
+  .footer-cta {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    padding-block: 5rem;
+  }
+}
+
+.footer-cta h2 {
+  max-width: 16ch;
+  margin-bottom: var(--space-3);
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 3.4rem);
+}
+
+.footer-cta p {
+  max-width: 46ch;
+  margin: 0;
+  font-size: var(--fs-base);
+}
+
+.footer-cta-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+@media (min-width: 56em) {
+  .footer-cta-action {
+    align-items: flex-end;
+  }
+}
+
+.footer-cta-number {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  color: var(--color-paper);
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.footer-grid {
+  display: grid;
+  gap: var(--space-6);
+  padding-block: var(--space-7);
+}
+
+@media (min-width: 40em) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 62em) {
+  .footer-grid {
+    grid-template-columns: 1.4fr 1fr 1fr 1.5fr;
+  }
+}
+
+.site-footer .brand-name {
+  color: var(--color-paper);
+}
+
+.site-footer .brand-tagline {
+  color: rgb(247 244 238 / 0.55);
+}
+
+.footer-about p {
+  max-width: 32ch;
+  margin: var(--space-4) 0;
+}
+
+.footer-title {
+  margin-bottom: var(--space-4);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(247 244 238 / 0.5);
+}
+
+.footer-links {
+  display: grid;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.site-footer a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.site-footer a:hover {
+  color: var(--color-copper-light);
+}
+
+.footer-contact {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+}
+
+.footer-contact li {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.footer-contact .icon {
+  margin-top: 0.3em;
+  color: var(--color-copper-light);
+}
+
+
+
+.footer-bottom {
+  padding-block: var(--space-5) 6rem;
+  border-top: 1px solid rgb(247 244 238 / 0.1);
+  font-size: var(--fs-xs);
+  color: rgb(247 244 238 / 0.5);
+}
+
+@media (min-width: 48em) {
+  .footer-bottom {
+    padding-bottom: var(--space-5);
+  }
+}
+
+.footer-bottom p {
+  margin: 0;
+}
